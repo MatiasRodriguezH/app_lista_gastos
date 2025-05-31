@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled, {keyframes} from "styled-components";
 import theme from "./../theme";
 
@@ -55,6 +55,21 @@ const ContenedorAlerta = styled.div`
 `;
 
 const Alerta = ({tipo, mensaje, estadoAlerta, cambiarEstadoAlerta}) => {
+    useEffect(() => {
+        let tiempo;
+
+        if(estadoAlerta === true){
+            tiempo = setTimeout(() => {
+                cambiarEstadoAlerta(false);
+            }, 4000);
+        }
+
+        /* Pasamos una funcion de limpieza. Esta función se ejecuta si el componente 
+        se desmonta. lo que hacemos es limpiar el tiempo para que no se intente cambiar el
+        estado si el componente no está en pantalla*/
+        return(() => clearTimeout(tiempo));
+    }, [estadoAlerta, cambiarEstadoAlerta])
+
     return (
         <>
             {estadoAlerta &&
