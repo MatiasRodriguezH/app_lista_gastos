@@ -39,7 +39,7 @@ const RegistroUsuarios = () => {
         }   
     }
 
-    const habdleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         cambiarEstadoAlerta(false);
         cambiarAlerta({});
@@ -78,7 +78,7 @@ const RegistroUsuarios = () => {
             navigate("/");
         } catch(error){
             cambiarEstadoAlerta(true);
-
+            console.log(error.code);
             let mensaje;
             switch(error.code){
                 case 'auth/invalid-password':
@@ -90,6 +90,9 @@ const RegistroUsuarios = () => {
                 case 'auth/invalid-email':
                     mensaje = 'El correo electrónico no es válido.'
                     break;
+                case 'auth/weak-password':
+                    mensaje = 'Le falta odio a tu contraseña'
+                    break;
                 default:
                     mensaje = 'Hubo un error al intentar crear la cuenta.'
                     break;
@@ -97,7 +100,7 @@ const RegistroUsuarios = () => {
          
             cambiarAlerta({
                 tipo: "error",
-                mensaje: {mensaje}
+                mensaje: mensaje
             })}
         }
     
@@ -118,27 +121,27 @@ const RegistroUsuarios = () => {
                 </ContenedorHeader>
             </Header>
 
-            <Formulario onSubmit={habdleSubmit}>
+            <Formulario onSubmit={handleSubmit}>
                 <Svg/>
                 <Input 
                     type="email"
                     name="email"
                     placeholder="Correo Electronico"
-                    values={correo}
+                    value={correo}
                     onChange={(e) => handleChange(e)}
                 />
                 <Input 
                     type="password"
                     name="password"
                     placeholder="Contraseña"
-                    values={password}
+                    value={password}
                     onChange={(e) => handleChange(e)}
                 />
                 <Input 
                     type="password"
                     name="password2"
                     placeholder="Repetir la Contraseña"
-                    values={password2}
+                    value={password2}
                     onChange={(e) => handleChange(e)}
                 />
                 <ContenedorBoton>
