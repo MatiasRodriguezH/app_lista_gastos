@@ -3,12 +3,17 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCBYDGWA21NH-8rx0NYvTvzbdEfxULVhLk",
-  authDomain: "lista-gastos-dc66d.firebaseapp.com",
-  projectId: "lista-gastos-dc66d",
-  storageBucket: "lista-gastos-dc66d.firebasestorage.app",
-  messagingSenderId: "17768891852",
-  appId: "1:17768891852:web:ce5fbe4b18ebc062e94969"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
+
+const auth = getAuth();
+const db= getFirestore();
+
+export {db, auth};
