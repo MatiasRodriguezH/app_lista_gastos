@@ -110,7 +110,7 @@ const InicioSesion = () => {
                     onChange={(e) => handleChange(e)}
                 />
                 <ContenedorBoton>
-                    <Boton as="button" primario="true" type="submit">Iniciar sesion</Boton>
+                    <Boton as="button" $primario type="submit">Iniciar sesion</Boton>
                 </ContenedorBoton>
             </Formulario>
 
