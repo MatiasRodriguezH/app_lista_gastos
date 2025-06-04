@@ -46,19 +46,19 @@ const Input = styled.input`
     outline: none;
  
     @media(max-width: 60rem){ /* 950px */
-        font-size: 2.2rem; /* 24px */
+        font-size: 2rem; /* 24px */
     }
 `;
  
 const InputGrande = styled(Input)`
-    font-size: 3.37rem; /* 70px */
+    font-size: 3rem; /* 70px */
     font-weight: bold;
 `;
  
 const ContenedorBoton = styled.div`
     display: flex;
     justify-content: center;
-    margin: 2.5rem 0;  /* 40px */
+    margin: 2rem 0;  /* 40px */
 `;
 
 export {ContenedorBoton, InputGrande, Input, Formulario, ContenedorFiltros};

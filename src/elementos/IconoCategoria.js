@@ -27,6 +27,7 @@ const IconoCategoria = ({nombre}) => {
         case "transporte":
             return <IconoTransporte/>
         default:
+            console.log("Hay un error con las fotos")
             break;
     }
 }

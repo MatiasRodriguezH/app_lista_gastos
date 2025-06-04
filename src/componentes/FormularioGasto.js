@@ -12,7 +12,7 @@ import Alerta from "../elementos/Alerta";
 const FormularioGasto = () => {
     const [inputDescripcion, cambiarInputDescripcion] = useState("");
     const [inputCantidad, cambiarInputCantidad] = useState("");
-    const [categoria, cambiarCategoria] = useState("Hogar");
+    const [categoria, cambiarCategoria] = useState("hogar");
     const [fecha, cambiarFecha] = useState(new Date());
     const {usuario} = useAuth();
     const [estadoAlerta, cambiarEstadoAlerta] = useState(false);

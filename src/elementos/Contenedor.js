@@ -5,7 +5,7 @@ const Contenedor = styled.div`
     background: #fff;
     width: 80%;
     max-width: 70rem; /*1110px*/
-    height: 90vh;
+    height: 95vh;
     max-height: 50rem;  /* 80px */
     overflow-y: auto;
     box-shadow: 0px 1.25rem 2.5rem rgba(0,0,0,.05);
