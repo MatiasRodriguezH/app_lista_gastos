@@ -7,6 +7,7 @@ import DatePicker from "./DatePicker";
 import agregarGasto from "../firebase/agregarGasto";
 import { getUnixTime, fromUnixTime } from "date-fns";
 import {useAuth} from "./../contextos/AuthContext";
+import Alerta from "../elementos/Alerta";
 
 const FormularioGasto = () => {
     const [inputDescripcion, cambiarInputDescripcion] = useState("");
@@ -14,6 +15,8 @@ const FormularioGasto = () => {
     const [categoria, cambiarCategoria] = useState("Hogar");
     const [fecha, cambiarFecha] = useState(new Date());
     const {usuario} = useAuth();
+    const [estadoAlerta, cambiarEstadoAlerta] = useState(false);
+    const [alerta, cambiarAlerta] = useState({});
 
     const handleChange = (e) => {
         if(e.target.name === "descripcion"){
@@ -25,15 +28,41 @@ const FormularioGasto = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        // Transformamos la cantidad de numero y le pasamos 2 decimales
         let cantidad = parseFloat(inputCantidad).toFixed(2);
         
-        agregarGasto({
-            categoria: categoria,
-            descripcion: inputDescripcion,
-            cantidad: cantidad,
-            fecha: getUnixTime(fecha),
-            uidUsuario: usuario.uid
-        })
+        //comprobamos que haya descripción y valor
+        if(inputDescripcion !== "" && inputCantidad !== ""){
+
+            if(cantidad){
+                agregarGasto({
+                    categoria: categoria,
+                    descripcion: inputDescripcion,
+                    cantidad: cantidad,
+                    fecha: getUnixTime(fecha),
+                    uidUsuario: usuario.uid
+                })
+                .then(() => {
+                    cambiarCategoria("hogar");
+                    cambiarInputCantidad("");
+                    cambiarInputDescripcion("");
+                    cambiarFecha(new Date());
+                    cambiarEstadoAlerta(true);
+                    cambiarAlerta({tipo: "exito", mensaje:"El gasto se ha agregado"})
+                })
+                .catch((error) =>{
+                    cambiarEstadoAlerta(true);
+                    cambiarAlerta({tipo: "error", mensaje:"Falló firebase :("})
+                })
+            } else {
+                cambiarEstadoAlerta(true);
+                cambiarAlerta({tipo: "error", mensaje:"No sé como llegaste a esto, pero sos tonto"})
+            }
+        } else {
+            cambiarEstadoAlerta(true);
+            cambiarAlerta({tipo: "error", mensaje:"Te crei vio?"})
+        }
+
     };
 
     return (
@@ -69,7 +98,12 @@ const FormularioGasto = () => {
                     Agregar Gasto <IconoPlus/>
                 </Boton>
             </ContenedorBoton>
-
+            <Alerta 
+                tipo={alerta.tipo}
+                mensaje={alerta.mensaje}
+                estadoAlerta={estadoAlerta}
+                cambiarEstadoAlerta={cambiarEstadoAlerta}
+            />
         </Formulario>
     );
 }
