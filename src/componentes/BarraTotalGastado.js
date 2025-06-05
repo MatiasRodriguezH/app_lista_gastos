@@ -6,7 +6,6 @@ import { useTotalDelMes } from "../contextos/TotalGastadoEnElMesContext";
 
 const BarraTotalGastado = () => {
     const dinero = useTotalDelMes();
-    console.log(dinero);
 
     return (
         <BarraTotal>

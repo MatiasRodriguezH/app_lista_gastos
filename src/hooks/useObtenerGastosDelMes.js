@@ -1,36 +1,40 @@
-import { useState, useEffect } from "react";
-import {db} from "./../firebase/firebaseConfig";
-import {startOfMonth, endOfMonth, getUnixTime} from "date-fns";
-import { collection, onSnapshot, query, orderBy, where, limit, startAfter } from "firebase/firestore";
-import { useAuth } from "../contextos/AuthContext";
+import {useState, useEffect} from 'react';
+import {db} from './../firebase/firebaseConfig';
+import {startOfMonth, endOfMonth, getUnixTime} from 'date-fns';
+import {useAuth} from './../contextos/AuthContext';
+import { collection, onSnapshot, query, orderBy, where } from 'firebase/firestore';
 
-const UseObtenerGastosDelMes = () => {
+const useObtenerGastosDelMes = () => {
     const [gastos, establecerGastos] = useState([]);
     const {usuario} = useAuth();
 
     useEffect(() => {
         const inicioDeMes = getUnixTime(startOfMonth(new Date()));
         const finDeMes = getUnixTime(endOfMonth(new Date()));
-
+        console.log("alo")
         if(usuario){
+            console.log("me quiero cortar un coco")
             const consulta = query(
-                collection(db, "gastos"),
-                orderBy("fecha", "desc"),
-                where("fecha", ">=", inicioDeMes),
-                where("fecha", "<=", finDeMes),
-                where("uidUsuario", "==", usuario.uid)
+                collection(db, 'gastos'),
+                orderBy('fecha', 'desc'),
+                where('fecha', '>=', inicioDeMes),
+                where('fecha', '<=', finDeMes),
+                where('uidUsuario', '==', usuario.uid)
             );
 
             const unsuscribe = onSnapshot(consulta, (snapshot) => {
                 establecerGastos(snapshot.docs.map((documento) => {
-                    return {...documento.data(), id: documento.id};
+                    return {...documento.data(), id: documento.id}
                 }))
             }, (error) => {console.log(error)});
+
+            // Use Effect tiene que retornar una funcion que se va a ejecutar cuando se desmonte el componente.
+            // En este caso queremos que ejecute el unsuscribe a la coleccion de firestore.
             return unsuscribe;
         }
-    }, [usuario])
-    
+    }, [usuario]);
+    console.log(gastos);
     return gastos;
 }
  
-export default UseObtenerGastosDelMes;
+export default useObtenerGastosDelMes;
