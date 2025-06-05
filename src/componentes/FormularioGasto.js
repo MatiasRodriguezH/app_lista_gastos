@@ -35,7 +35,7 @@ const FormularioGasto = ({gasto}) => {
                 navigate("/lista")
             }
         }
-    }, [gasto, usuario]);
+    }, [gasto, usuario, navigate]);
     
     const handleChange = (e) => {
         if(e.target.name === "descripcion"){
